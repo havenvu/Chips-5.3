@@ -11,5 +11,10 @@ class Movie < ActiveRecord::Base
       Movie.where(:rating => ratings_list)
     end
   end
+  def self.sortedby(p)
+    if p == 'title'
+      Movie.order(:title)
+    end
+  end
 
 end

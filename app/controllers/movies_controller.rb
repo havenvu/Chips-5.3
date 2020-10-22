@@ -18,10 +18,10 @@ class MoviesController < ApplicationController
     @movies = Movie.with_ratings(@ratings_to_show)
     
     #Now we will sort
-    if params[:sorted].nil?
-      return
+    if params[:sort].nil?
+      return @movies
     else
-      @movies = Movie.sortedby(params[:sorted].keys)
+      @movies = @movies.sortedby(params[:sort])
     end
     
 

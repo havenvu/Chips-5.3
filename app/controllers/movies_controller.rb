@@ -12,21 +12,62 @@ class MoviesController < ApplicationController
     @all_ratings = ['G','PG','PG-13','R']
     if params[:ratings].nil?
       @ratings_to_show = []
+      
     else
       @ratings_to_show = params[:ratings].keys
     end
-    @movies = Movie.with_ratings(@ratings_to_show)
+    session[:ratings] = @ratings_to_show
     
-    #Now we will sort
     if params[:sort].nil?
-      return @movies
+      @movies
     else
-      @movies = @movies.sortedby(params[:sort])
+      session[:sort] = params[:sort]
     end
+    @movies = Movie.with_ratings(session[:ratings]).sortedby(session[:sort])
+   
+#     @all_ratings = ['G', 'PG', 'PG-13', 'R']
+
+#     session[:ratings] = params[:ratings] if params[:ratings]
+#     session[:sort]    = params[:sort]    if params[:sort]
+
+#     if session[:ratings] || session[:sort]
+#       case session[:sort]
+#       when 'title'
+#         @title_hilite = 'hilite'
+#       when 'release_date'
+#         @release_hilite = 'hilite'
+#       end
+#     end
+
+#       session[:ratings] ||= @all_ratings
+#       @ratings_to_show = session[:ratings]
+#       @ratings_to_show = @ratings_to_show.keys if @ratings.respond_to?(:keys)
+#       @movies = Movie.with_ratings(session[:ratings].keys).sortedby(session[:sort])
+#     else
+#       @movies = Movie.all
+#     end
+
+#     if session[:ratings] != params[:ratings] || session[:sort] != params[:sort]
+#       redirect_to movies_path(ratings: session[:ratings], sort: session[:sort])
+#     end
     
-
-#     byebug
-
+    
+    
+    
+    
+    
+#     if session[:all].include?('title') 
+#       session[:all].delete('title')
+#     end
+#     if session[:all].include?('release_date')
+#       session[:all].delete('release_date')
+#     end
+#     session[:all] = session[:ratings].append(session[:sort])
+#     
+#     
+#     
+#     params[:sort] = session[:sort]
+#     params[:ratings] = session[:ratings]
 
   end
 

@@ -12,6 +12,9 @@ class Movie < ActiveRecord::Base
     end
   end
   def self.sortedby(p)
+    if p.nil?
+      return
+    end
     Movie.order(p)
   end
 

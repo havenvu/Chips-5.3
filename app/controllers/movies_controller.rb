@@ -19,7 +19,7 @@ class MoviesController < ApplicationController
     session[:ratings] = @ratings_to_show
     
     if params[:sort].nil?
-      @movies
+      @movies = Movie.all
     else
       session[:sort] = params[:sort]
     end

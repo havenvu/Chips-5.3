@@ -23,9 +23,9 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th class="<%= 'hilite bg-warning' if session[:sort] == 'title' %>" ><%= link_to "Movie Title", movies_path(sort: 'title', ratings: Hash[@ratings_to_show.collect { |item| [item, 1] } ]), id: 'title_header' %></th>
+      <th id= 'title_header' class="<%= 'hilite bg-warning' if session[:sort] == 'title' %>" ><%= link_to "Movie Title", movies_path(sort: 'title', ratings: Hash[@ratings_to_show.collect { |item| [item, 1] } ]) %></th>
       <th>Rating</th>
-      <th class="<%= 'hilite bg-warning' if session[:sort] == 'release_date' %>" ><%= link_to "Release Date", movies_path(sort: 'release_date', ratings: Hash[@ratings_to_show.collect { |item| [item, 1] } ]), id: 'release_date_header' %></th>
+      <th id= 'release_date_header' class="<%= 'hilite bg-warning' if session[:sort] == 'release_date' %>" ><%= link_to "Release Date", movies_path(sort: 'release_date', ratings: Hash[@ratings_to_show.collect { |item| [item, 1] } ]) %></th>
       <th>More Info</th>
     </tr>
   </thead>

@@ -24,7 +24,6 @@ class MoviesController < ApplicationController
       end
     end
     session[:ratings] = Hash[@ratings_to_show.collect { |item| [item, "1"] } ]
-#     session[:ratings] = @ratings_to_show
     
     if params[:sort].nil?
       @movies = Movie.all
@@ -34,15 +33,10 @@ class MoviesController < ApplicationController
     @movies = Movie.with_ratings(session[:ratings].keys).sortedby(session[:sort])
     
     if params[:ratings] != session[:ratings]
-      @sessyy = session[:ratings]
-      @paramssssss = params[:ratings]
       redirect_to movies_path(sort: @sort, ratings: session[:ratings])
-      puts @sessyy
-      puts @paramssssss
+
     end 
-#     if session[:ratings] != params[:ratings] || session[:sort] != params[:sort]
-#       redirect_to movies_path(sort: session[:sort], ratings: session[:rat_hash])
-#     end
+
 
   end
 

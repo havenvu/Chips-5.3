@@ -11,26 +11,35 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = ['G','PG','PG-13','R']
     if params[:ratings].nil?
-      @ratings_to_show = @all_ratings
-      
+      if session[:ratings].nil?
+        @ratings_to_show = @all_ratings
+      else
+        @ratings_to_show = session[:ratings].keys
+      end
     else
-      @ratings_to_show = params[:ratings].keys
+      if params[:ratings].respond_to?(:keys)
+        @ratings_to_show = params[:ratings].keys
+      else
+        @ratings_to_show = params[:ratings]
+      end
     end
-#     session[:rat_hash] = Hash[@ratings_to_show.collect { |item| [item, 1] } ]
-    session[:ratings] = @ratings_to_show
+    session[:ratings] = Hash[@ratings_to_show.collect { |item| [item, "1"] } ]
+#     session[:ratings] = @ratings_to_show
     
     if params[:sort].nil?
       @movies = Movie.all
     else
       session[:sort] = params[:sort]
     end
-    @movies = Movie.with_ratings(session[:ratings]).sortedby(session[:sort])
+    @movies = Movie.with_ratings(session[:ratings].keys).sortedby(session[:sort])
     
-#     if params[:ratings] != session[:ratings]
-#       flash.keep
-#       redirect_to movies_path sort: @sort, ratings: @ratings
-#       byebug
-#     end 
+    if params[:ratings] != session[:ratings]
+      @sessyy = session[:ratings]
+      @paramssssss = params[:ratings]
+      redirect_to movies_path(sort: @sort, ratings: session[:ratings])
+      puts @sessyy
+      puts @paramssssss
+    end 
 #     if session[:ratings] != params[:ratings] || session[:sort] != params[:sort]
 #       redirect_to movies_path(sort: session[:sort], ratings: session[:rat_hash])
 #     end
